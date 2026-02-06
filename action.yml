@@ -17,8 +17,6 @@ runs:
     - name: Detect Platform and Install
       shell: bash
       run: |
-        # 1. 映射 Runner OS 到 URL 路径
-        # GitHub Runner OS: Linux, Windows, macOS
         TARGET_OS=""
         case "${{ runner.os }}" in
           "Linux")   TARGET_OS="linux" ;;
@@ -26,8 +24,6 @@ runs:
           "Windows") TARGET_OS="windows" ;;
         esac
 
-        # 2. 映射 Runner Arch 到 URL 路径
-        # GitHub Runner Arch: X64, ARM64, X86
         TARGET_ARCH=""
         case "${{ runner.arch }}" in
           "X64")   TARGET_ARCH="64bit" ;;
@@ -46,36 +42,34 @@ runs:
           exit 1
         fi
 
-        # 3. 构造下载 URL
-        # URL 结构: https://fast-down-update.s121.top/cli/download/latest/{os}/{arch}
-        BASE_URL="https://fast-down-update.s121.top/cli/download"
-        VERSION="${{ inputs.version }}"
-        DOWNLOAD_URL="$BASE_URL/$VERSION/$TARGET_OS/$TARGET_ARCH"
+        REPO="fast-down/cli"
+        if [[ "${{ inputs.version }}" == "latest" ]]; then
+          DOWNLOAD_URL="https://github.com/$REPO/releases/latest/download/fd-$TARGET_OS-$TARGET_ARCH"
+        else
+          DOWNLOAD_URL="https://github.com/$REPO/releases/download/${{ inputs.version }}/fd-$TARGET_OS-$TARGET_ARCH"
+        fi
+        if [[ "$TARGET_OS" == "windows" ]]; then
+          DOWNLOAD_URL="${DOWNLOAD_URL}.exe"
+        fi
 
         echo "🚀 Installing fast-down for $TARGET_OS ($TARGET_ARCH)..."
         echo "🔗 Downloading from: $DOWNLOAD_URL"
 
-        # 4. 准备安装路径
-        # 我们安装到用户目录下的 .fast-down/bin
+        # 安装到用户目录下的 .fast-down/bin
         INSTALL_DIR="$HOME/.fast-down/bin"
         mkdir -p "$INSTALL_DIR"
 
-        # 5. 确定文件名 (Windows 需要 .exe 后缀)
         BIN_NAME="fd"
         if [[ "$TARGET_OS" == "windows" ]]; then
           BIN_NAME="fd.exe"
         fi
 
-        # 6. 下载并重命名 (-L 跟随重定向, --fail 失败报错)
-        # 这里的关键是直接下载为目标文件名 $BIN_NAME (fd 或 fd.exe)
         curl -L --fail "$DOWNLOAD_URL" -o "$INSTALL_DIR/$BIN_NAME"
 
-        # 7. 赋予执行权限 (非 Windows)
         if [[ "$TARGET_OS" != "windows" ]]; then
           chmod +x "$INSTALL_DIR/$BIN_NAME"
         fi
 
-        # 8. 添加到 GitHub Actions 的 PATH
         echo "$INSTALL_DIR" >> $GITHUB_PATH
 
         echo "✅ fast-down installed successfully as '$BIN_NAME'!"
