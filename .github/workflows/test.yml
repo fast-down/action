@@ -27,7 +27,7 @@ jobs:
         if: matrix.version != 'latest'
         shell: bash
         run: |
-          INSTALLED_VERSION=$(fd -h)
+          INSTALLED_VERSION=$(fd -h 2>&1)
           if [[ "$INSTALLED_VERSION" == *"${{ matrix.version }}"* ]]; then
             echo "✅ Version matches!"
           else
