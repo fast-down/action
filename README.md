@@ -51,7 +51,7 @@ steps:
   - name: Setup fast-down (Specific Version)
     uses: fast-down/action@v1
     with:
-      version: '2.6.0' # Specify the version you need
+      version: v2.6.2 # Specify the version you need
 
   - name: Check version
     run: fd -h
@@ -61,4 +61,4 @@ steps:
 
 | Input | Description | Required | Default |
 | :--- | :--- | :---: | :--- |
-| `version` | The version of fast-down to install (e.g., `latest`, `2.6.0`). | No | `latest` |
+| `version` | The version of fast-down to install (e.g., `latest`, `v2.6.2`). | No | `latest` |
