@@ -70,7 +70,12 @@ runs:
           chmod +x "$INSTALL_DIR/$BIN_NAME"
         fi
 
-        echo "$INSTALL_DIR" >> $GITHUB_PATH
+        if [[ "$TARGET_OS" == "windows" ]]; then
+          # 使用 cygpath -w 将 /c/Users/... 转为 C:\Users\... 这样 PowerShell 才能识别
+          echo "$(cygpath -w "$INSTALL_DIR")" >> $GITHUB_PATH
+        else
+          echo "$INSTALL_DIR" >> $GITHUB_PATH
+        fi
 
         echo "✅ fast-down installed successfully as '$BIN_NAME'!"
         echo "👉 You can now use 'fd' command in subsequent steps."
