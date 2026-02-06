@@ -54,7 +54,7 @@ steps:
       version: '2.6.0' # Specify the version you need
 
   - name: Check version
-    run: fd --version
+    run: fd -h
 ```
 
 ## Inputs

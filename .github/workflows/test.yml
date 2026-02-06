@@ -16,11 +16,9 @@ jobs:
         uses: ./
 
       - name: Verify Installation
-        run: |
-          fd --version
-          fd --help
+        run: fd -h
 
       - name: Try download a file
         run: |
-          fd download https://www.google.com/robots.txt -o robots.txt
+          fd https://www.google.com/robots.txt -o robots.txt
           cat robots.txt
