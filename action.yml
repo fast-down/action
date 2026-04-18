@@ -7,7 +7,7 @@ branding:
 
 inputs:
   version:
-    description: 'Version to install (e.g., "latest", "v2.6.2")'
+    description: 'Version to install (e.g., "latest", "v2.7.8")'
     required: false
     default: "latest"
 
@@ -26,14 +26,14 @@ runs:
 
         TARGET_ARCH=""
         case "${{ runner.arch }}" in
-          "X64")   TARGET_ARCH="64bit" ;;
-          "ARM64") TARGET_ARCH="arm64" ;;
-          "X86")   TARGET_ARCH="32bit" ;;
+          "X64")   TARGET_ARCH="x86_64" ;;
+          "ARM64") TARGET_ARCH="aarch64" ;;
+          "X86")   TARGET_ARCH="i686" ;;
         esac
 
-        # 检查不支持的组合 (macOS 32bit)
-        if [[ "$TARGET_OS" == "macos" && "$TARGET_ARCH" == "32bit" ]]; then
-          echo "::error::macOS 32bit is not supported by fast-down."
+        # 检查不支持的组合 (macOS i686)
+        if [[ "$TARGET_OS" == "macos" && "$TARGET_ARCH" == "i686" ]]; then
+          echo "::error::macOS i686 is not supported by fast-down."
           exit 1
         fi
 

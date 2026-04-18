@@ -1,6 +1,10 @@
 name: Test
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   test-install:
@@ -8,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        version: [latest, v2.6.2]
+        version: [latest, v2.7.8]
     runs-on: ${{ matrix.os }}
     name: Test on ${{ matrix.os }} with fast-down ${{ matrix.version }}
     steps:

@@ -14,7 +14,7 @@ It automatically downloads the correct binary for the runner's OS/Arch, renames 
 1. **⚡️ Zero Configuration**
    Automatically detects **Linux**, **Windows**, and **macOS** environments and downloads the appropriate binary.
 2. **🔄 Cross-Architecture Support**
-   Supports **x64**, **ARM64**, and **32-bit** (Linux/Windows) architectures seamlessly.
+   Supports **x86_64**, **aarch64**, and **i686** (Linux/Windows) architectures seamlessly.
 3. **🛠️ Ready to Use**
    Installs the binary as `fd` (or `fd.exe`) and adds it to the `PATH`, so you can immediately run `fd download ...`.
 4. **🎯 Version Control**
@@ -24,9 +24,9 @@ It automatically downloads the correct binary for the runner's OS/Arch, renames 
 
 | Arch   | Windows | Linux | Mac OS |
 | :--- | :---: | :---: | :---: |
-| **64 bit** | ✅ | ✅ | ✅ |
-| **Arm64** | ✅ | ✅ | ✅ |
-| **32 bit** | ✅ | ✅ | ❌ |
+| **x86_64** | ✅ | ✅ | ✅ |
+| **aarch64** | ✅ | ✅ | ✅ |
+| **x86** | ✅ | ✅ | ❌ |
 
 ## Usage
 
@@ -51,7 +51,7 @@ steps:
   - name: Setup fast-down (Specific Version)
     uses: fast-down/action@v1
     with:
-      version: v2.6.2 # Specify the version you need
+      version: v2.7.8 # Specify the version you need
 
   - name: Check version
     run: fd -h
@@ -61,4 +61,4 @@ steps:
 
 | Input | Description | Required | Default |
 | :--- | :--- | :---: | :--- |
-| `version` | The version of fast-down to install (e.g., `latest`, `v2.6.2`). | No | `latest` |
+| `version` | The version of fast-down to install (e.g., `latest`, `v2.7.8`). | No | `latest` |
