@@ -35,7 +35,7 @@ It automatically downloads the correct binary for the runner's OS/Arch, renames 
 ```yaml
 steps:
   - name: Checkout code
-    uses: actions/checkout@v4
+    uses: actions/checkout@v6
 
   - name: Setup fast-down
     uses: fast-down/action@v1
